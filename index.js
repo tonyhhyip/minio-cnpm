@@ -41,7 +41,7 @@ class MinioNFS {
     return this.client.presignedGetObject(this.bucket, key, 3600)
       .then((presigned) => {
         const u = new URL(presigned);
-        u.protocol = !!this.cdnOpt.inSecure ? 'http:' : 'https:';
+        u.protocol = this.cdnOpt.inSecure ? 'http:' : 'https:';
         u.host = this.cdnOpt.hostname;
       });
   }

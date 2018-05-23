@@ -6,10 +6,18 @@
   "repository": "git://github.com/tonyhhyip/minio-cnpm",
   "author": "Tony Yip <tony@tonyhhyip.me>",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "engines": {
     "node": ">=6.4.0"
   },
   "dependencies": {
     "minio": "^5.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0"
   }
 }
