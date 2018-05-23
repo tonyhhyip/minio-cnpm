@@ -1,21 +1,23 @@
 /*!
- * minio-cnpm - index.js
+ * minio-cdn-cnpm - index.js
  *
  * Copyright(c) 2018 Tony Yip.
  * MIT Licensed
  */
 
-const fs = require('fs');
-const minio = require('minio');
+const { URL } = require('url');
+const { Client } = require('minio');
 
 class MinioNFS {
-  constructor(bucket, options) {
+  constructor(bucket, minioOption, cdnOpt) {
     this.bucket = bucket;
-    this.client = new minio.Client(options);
+    this.client = new Client(minioOption);
+    this.cdnOpt = cdnOpt;
   }
 
-  upload(filepath, options) {
-    return this.uploadBuffer(fs.createReadStream(filepath), options);
+  upload(filepath, { key }) {
+    return this.client.fPutObject(this.bucket, key, filepath)
+      .then(() => ({ key }));
   }
 
   uploadBuffer(buffer, { key, size }) {
@@ -36,7 +38,12 @@ class MinioNFS {
   }
 
   url(key) {
-    return this.client.presignedGetObject(this.bucket, key, 3600);
+    return this.client.presignedGetObject(this.bucket, key, 3600)
+      .then((presigned) => {
+        const u = new URL(presigned);
+        u.protocol = !!this.cdnOpt.inSecure ? 'http:' : 'https:';
+        u.host = this.cdnOpt.hostname;
+      });
   }
 }
 
