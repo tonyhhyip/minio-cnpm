@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Minio API Wrapper for cnpm NFS with CDN",
   "main": "index.js",
-  "repository": "git://github.com/tonyhhyip/minio-cnpm",
+  "repository": "git://gitlab.com/tonyhhyip/minio-cnpm",
   "author": "Tony Yip <tony@tonyhhyip.me>",
   "license": "MIT",
   "scripts": {
